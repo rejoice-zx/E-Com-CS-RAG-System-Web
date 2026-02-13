@@ -1,0 +1,44 @@
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# ===== Environment variables =====
+.env
+.env.*
+!.env.example
+
+# ===== Backend runtime data =====
+backend/data/
+backend/logs/
+*.log
+*.db
+
+# ===== Frontend =====
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# ===== IDEs =====
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Kiro =====
+.kiro/
