@@ -132,7 +132,63 @@
 
 ## 快速开始
 
-### 环境要求
+提供两种部署方式：[Docker 一键部署](#docker-部署推荐) 和 [手动部署](#手动部署)。
+
+### Docker 部署（推荐）
+
+#### 环境要求
+
+- Docker 20.10+
+- Docker Compose V2+
+
+#### 1. 准备配置
+
+```bash
+# 复制环境变量模板
+cp .env.example .env
+
+# 编辑 .env，修改 JWT_SECRET_KEY（必须）
+# 可用以下命令生成随机密钥：
+python -c "import secrets; print(secrets.token_urlsafe(64))"
+```
+
+#### 2. 构建并启动
+
+```bash
+docker-compose up -d --build
+```
+
+#### 3. 访问服务
+
+- 前端页面：http://localhost
+- 客户问答：http://localhost/（无需登录）
+- 后台管理：http://localhost/workbench（需登录）
+- API 文档：http://localhost/docs
+- 健康检查：http://localhost/api/health
+
+#### 常用命令
+
+```bash
+# 查看日志
+docker-compose logs -f
+
+# 停止服务
+docker-compose down
+
+# 重启服务
+docker-compose restart
+
+# 重新构建并启动（代码更新后）
+docker-compose up -d --build
+```
+
+> **数据持久化**：数据库和向量索引存储在 Docker volumes 中（`backend-data`、`backend-logs`），删除容器不会丢失数据。执行 `docker-compose down -v` 会同时删除数据卷。
+
+---
+
+### 手动部署
+
+#### 环境要求
 
 - Python 3.10+
 - Node.js 18+
@@ -215,7 +271,12 @@ npm run dev
 ## 项目结构
 
 ```
+├── docker-compose.yml            # Docker 编排
+├── .env.example                  # Docker 环境变量模板
+├── .dockerignore                 # Docker 构建忽略
+│
 ├── backend/
+│   ├── Dockerfile                # 后端容器构建
 │   ├── app/
 │   │   ├── api/                  # API 路由层
 │   │   │   ├── auth.py           # 认证（登录/注册/刷新/访客令牌）
@@ -282,6 +343,8 @@ npm run dev
 │   └── requirements.txt
 │
 ├── frontend/
+│   ├── Dockerfile                # 前端容器构建（多阶段）
+│   ├── nginx.conf                # Nginx 反向代理配置
 │   ├── src/
 │   │   ├── api/                  # API 调用封装（按模块拆分）
 │   │   ├── views/                # 页面视图

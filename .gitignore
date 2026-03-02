@@ -42,3 +42,6 @@ desktop.ini
 
 # ===== Kiro =====
 .kiro/
+
+# ===== Docker =====
+docker-compose.override.yml
