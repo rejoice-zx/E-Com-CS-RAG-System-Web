@@ -18,6 +18,7 @@ email-validator>=2.1.0
 
 # HTTP Client
 httpx>=0.26.0
+requests>=2.31.0 
 
 # Vector Store and Embeddings
 faiss-cpu>=1.7.4
